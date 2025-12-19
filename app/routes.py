@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, abort
 from app.models import Movie, Session, Seat, Booking
 from app.app import db
 
@@ -19,6 +19,7 @@ def seats(session_id):
     all_seats = Seat.query.all()
     booked = {b.seat_id for b in Booking.query.filter_by(session_id=session_id).all()}
     available = len(all_seats) - len(booked)
+
     return render_template(
         'seats.html',
         seats=all_seats,
@@ -29,21 +30,24 @@ def seats(session_id):
 
 @main.route('/book', methods=['POST'])
 def book():
-    session_id = request.form['session_id']
-    seat_id = request.form['seat_id']
-    name = request.form['name']
+    session_id = request.form.get('session_id')
+    seat_id = request.form.get('seat_id')
+    name = request.form.get('name')
+
+    if not all([session_id, seat_id, name]):
+        abort(400)
 
     booking = Booking(
-        session_id=session_id,
-        seat_id=seat_id,
+        session_id=int(session_id),
+        seat_id=int(seat_id),
         customer_name=name
     )
 
-    db.session.add(booking)
     try:
+        db.session.add(booking)
         db.session.commit()
     except:
         db.session.rollback()
-        return "Seat already booked", 400
+        return "Seat already booked", 409
 
     return redirect(url_for('main.index'))
