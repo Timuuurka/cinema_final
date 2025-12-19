@@ -4,8 +4,8 @@ services:
     ports:
       - "5001:5001"
     volumes:
-      - cinema_data:/app
+      - cinema_db:/app/instance
     restart: always
 
 volumes:
-  cinema_data:
+  cinema_db:
