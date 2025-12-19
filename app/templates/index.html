@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="POST" action="/book">
-    <label>Movie:</label><input name="movie"><br>
-    <label>Session:</label><input name="session"><br>
-    <label>Hall:</label><input name="hall"><br>
-    <label>Row:</label><input type="number" name="row"><br>
-    <label>Seat:</label><input type="number" name="seat"><br>
-    <label>Your name:</label><input name="customer_name"><br>
-    <button type="submit">Book</button>
-</form>
+<h3>Available Movies</h3>
+<div class="row">
+{% for movie in movies %}
+  <div class="col-md-3">
+    <div class="card bg-secondary mb-3">
+      <div class="card-body text-center">
+        <h5>{{ movie.title }}</h5>
+        <a href="/sessions/{{ movie.id }}" class="btn btn-warning">View Sessions</a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
 {% endblock %}

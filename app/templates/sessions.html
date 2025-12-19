@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Sessions</h3>
+<ul class="list-group">
+{% for s in sessions %}
+<li class="list-group-item d-flex justify-content-between">
+  <span>{{ s.movie.title }} — {{ s.time }}</span>
+  <a href="/seats/{{ s.id }}" class="btn btn-success btn-sm">Choose Seats</a>
+</li>
+{% endfor %}
+</ul>
+{% endblock %}
