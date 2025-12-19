@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  web:
+    image: cinema_final:1.0
+    container_name: cinema_final_web
+    ports:
+      - "5001:5001"
+    volumes:
+      - cinema_data:/app
+    restart: always
+
+volumes:
+  cinema_data:

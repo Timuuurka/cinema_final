@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<p>Booking successful!</p>
+<p>
+Movie: {{ booking.movie }}<br>
+Session: {{ booking.session }}<br>
+Hall: {{ booking.hall }}<br>
+Seat: Row {{ booking.row }}, Seat {{ booking.seat }}<br>
+Name: {{ booking.customer_name }}
+</p>
+<a href="/">Back</a>
+{% endblock %}
