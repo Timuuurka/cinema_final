@@ -20,7 +20,7 @@ pipeline {
 
     stage('Deploy with Docker Compose') {
       steps {
-        sh 'docker compose down'
+        sh 'docker compose down || true'
         sh 'docker compose up -d'
         sh 'docker compose ps'
       }
@@ -36,7 +36,7 @@ pipeline {
 
   post {
     always {
-      sh 'docker images | head'
+      sh 'docker ps'
     }
   }
 }
